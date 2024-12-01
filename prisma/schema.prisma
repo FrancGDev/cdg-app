@@ -1,0 +1,93 @@
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id             Int       @id @default(autoincrement())
+//   name           String?   @unique
+//   hashedPassword String?
+//   informes       Informe[]
+//   role           Role      @default(LECTOR)
+//   createdAt      DateTime  @default(now())
+//   updatedAt      DateTime  @updatedAt
+// }
+
+// model Informe {
+//   id         Int       @id @default(autoincrement())
+//   title      String
+//   content    String    @db.LongText
+//   date       DateTime?
+//   incidencia String?
+//   author     User      @relation(fields: [authorId], references: [id])
+//   authorId   Int
+//   createdAt  DateTime  @default(now())
+//   updatedAt  DateTime  @updatedAt
+// }
+
+// enum Role {
+//   ADMIN
+//   SUPERVISOR
+//   LECTOR
+// }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int       @id @default(autoincrement())
+  name           String?   @unique
+  hashedPassword String?
+  informes       Informe[]
+  roleId         Int
+  role           Role      @relation(fields: [roleId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Role {
+  id         Int             @id @default(autoincrement())
+  name       String          @unique
+  privileges RolePrivilege[]
+  users      User[]
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+}
+
+model Privilege {
+  id          Int             @id @default(autoincrement())
+  name        String          @unique
+  description String?
+  roles       RolePrivilege[]
+}
+
+model RolePrivilege {
+  roleId      Int
+  privilegeId Int
+  role        Role      @relation(fields: [roleId], references: [id])
+  privilege   Privilege @relation(fields: [privilegeId], references: [id])
+
+  @@id([roleId, privilegeId])
+}
+
+model Informe {
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String    @db.LongText
+  date       DateTime?
+  incidencia String?
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
