@@ -54,18 +54,30 @@ const ReportDetail = ({ params }) => {
             </header>
 
             <section className="p-4 h-full w-full flex flex-col items-start max-w-4xl mx-auto flex-1">
-                <button onClick={handleBack} className="flex items-center mb-4 text-blue-600 hover:underline no-print">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-2"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                <div className="flex justify-between items-center w-full mb-4 no-print">
+                    <button
+                        onClick={handleBack}
+                        className="flex items-center text-blue-600 hover:underline"
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Volver a la lista
-                </button>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Volver a la lista
+                    </button>
+                    <button
+                        onClick={() => router.push(`/editReport/${id}`)}
+                        className="rounded p-2 bg-blue-600 text-white font-medium drop-shadow-[2px_4px_0px_rgba(0,0,0,0.8)] transition duration-200 ease-out"
+                    >
+                        Editar Informe
+                    </button>
+                </div>
+
                 <h1 className="text-3xl font-bold mb-4">{report.title}</h1>
                 <p className="text-gray-600 mb-2">Fecha del hecho: {new Date(report.date).toLocaleDateString()}</p>
                 <p className="text-gray-600 mb-4">Autor del informe: {report.author.name}</p>

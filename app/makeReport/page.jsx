@@ -82,7 +82,7 @@ const MakeReport = () => {
                     title,
                     description,
                     date: formattedDate,
-                    incidencia // También se envía en el cuerpo de la solicitud
+                    incidencia
                 }),
             });
 
